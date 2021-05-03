@@ -115,39 +115,54 @@
 </script>
 
 <style lang="scss">
-@import './../assets/scss/mixin.scss';
+    @import './../assets/scss/config.scss';
+    @import './../assets/scss/mixin.scss';
+
     .index {
         .swiper-box {
-            .nav-menu{
+            .nav-menu {
                 position: absolute;
                 width: 264px;
                 height: 451px;
-                z-index:9;
+                z-index: 9;
                 padding: 26px 0;
-                background-color: #55585A;
+                background-color: #55585a80;
                 box-sizing: border-box;
-                .menu-wrap{
-                    .menu-item{
+
+                .menu-wrap {
+                    .menu-item {
                         height: 50px;
                         line-height: 50px;
                     }
-                    a{
+
+                    a {
                         position: relative;
+                        display: block;
                         font-size: 16px;
                         color: #ffffff;
                         padding-left: 30px;
-                        &:after{
+
+                        &:after {
                             position: absolute;
                             right: 30px;
-                            top:17.5px;
-                            content:' ';
-                            @include bgImg(10px,15px,'/imgs/icon-arrow.png');
+                            top: 17.5px;
+                            content: ' ';
+                            @include bgImg(10px, 15px, '/imgs/icon-arrow.png');
+                        }
+
+                        &:hover {
+                            background-color: $colorA;
                         }
                     }
                 }
             }
+
             .swiper-container {
                 height: 451px;
+
+                .swiper-button-prev {
+                    left: 274px;
+                }
 
                 img {
                     width: 100%;
