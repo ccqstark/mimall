@@ -6,7 +6,7 @@
 
 <script>
     export default {
-        name:'order-header'
+        name: 'order-header'
     }
 </script>
 

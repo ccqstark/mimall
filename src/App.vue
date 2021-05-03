@@ -6,28 +6,26 @@
 
 <script>
 export default {
-  name: 'App',
-  components: {
+  name: "App",
+  components: {},
+  data() {
+    return {
+      res: {}
+    };
   },
-  data(){
-    return{
-      res:{}
-    }
-  },
-  mounted(){
+  mounted() {
     // 本地加载静态json文件的方式mock, public是根目录，所以直接‘/’
     // this.axios.get('/mock/user/login.json').then((res)=>{
     //   this.res = res;
     // });
 
-    this.axios.get('/user/login').then((res)=>{
+    this.axios.get("/user/login").then(res => {
       this.res = res;
-    })
-
+    });
   }
-}
+};
 </script>
 
 <style>
-@import './assets/scss/reset.scss';
+@import "./assets/scss/reset.scss";
 </style>
