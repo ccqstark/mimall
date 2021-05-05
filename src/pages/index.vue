@@ -95,11 +95,23 @@
       </div>
     </div>
     <service-bar></service-bar>
+    <model
+      title="提示"
+      sureText="查看购物车"
+      btnType="1"
+      modelType="middle"
+      v-bind:showModel="showModel"
+    >
+      <template v-slot:body>
+        <p>商品添加成功!</p>
+      </template>
+    </model>
   </div>
 </template>
 
 <script>
 import ServiceBar from "../components/ServiceBar.vue";
+import Model from "../components/Model.vue";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 import "swiper/dist/css/swiper.css";
 export default {
@@ -107,7 +119,8 @@ export default {
   components: {
     swiper,
     swiperSlide,
-    ServiceBar
+    ServiceBar,
+    Model
   },
   data() {
     return {
@@ -219,9 +232,10 @@ export default {
       this.axios("/products", {
         params: {
           categoryId: 100012,
-          pageSize: 8
+          pageSize: 14
         }
       }).then(res => {
+        res.list = res.list.slice(6, 14);
         this.phoneList = [res.list.slice(0, 4), res.list.slice(4, 8)];
       });
     }
