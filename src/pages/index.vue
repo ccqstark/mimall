@@ -100,6 +100,7 @@
     <model
       title="提示"
       sureText="查看购物车"
+      cancelText="取消"
       btnType="1"
       modelType="middle"
       v-bind:showModel="showModel"

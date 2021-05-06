@@ -5,7 +5,7 @@
       <div class="mask"></div>
       <div class="model-dialog">
         <div class="model-header">
-          <span>标题</span>
+          <span>{{ title }}</span>
           <a
             href="javascript:;"
             class="icon-close"
@@ -21,22 +21,22 @@
             class="btn"
             v-if="btnType == 1"
             v-on:click="$emit('submit')"
-            >确定</a
-          >
+            >{{ sureText }}
+          </a>
           <a
             href="javascript:;"
             class="btn"
             v-if="btnType == 2"
             v-on:click="$emit('cancel')"
-            >确定</a
-          >
+            >{{ sureText }}
+          </a>
           <div class="btn-group" v-if="btnType == 3">
             <a href="javascript:;" class="btn" v-on:click="$emit('submit')"
-              >确定</a
-            >
+              >{{ sureText }}
+            </a>
             <a href="javascript:;" class="btn" v-on:click="$emit('cancel')"
-              >取消</a
-            >
+              >{{ cancelText }}
+            </a>
           </div>
         </div>
       </div>
@@ -54,7 +54,10 @@ export default {
       default: "form"
     },
     // 弹框标题
-    title: String,
+    title: {
+      type: String,
+      default: "提示"
+    },
     //按钮类型:1:确定按钮 2:取消按钮 3:确定取消
     btnType: String,
     sureText: {
