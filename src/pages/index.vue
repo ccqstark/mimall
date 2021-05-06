@@ -60,7 +60,7 @@
           v-for="(item, index) in adsList"
           v-bind:key="index"
         >
-          <img v-bind:src="item.img" alt="" />
+          <img v-lazy="item.img" alt="" />
         </a>
       </div>
       <div class="banner">
@@ -74,14 +74,16 @@
         <h2>手机</h2>
         <div class="wrapper">
           <div class="banner-left">
-            <a href="/#/products/30"><img src="/imgs/mix-alpha.jpg" alt=""/></a>
+            <a href="/#/products/30">
+              <img v-lazy="'/imgs/mix-alpha.jpg'" alt="" />
+            </a>
           </div>
           <div class="list-box">
             <div class="list" v-for="(arr, i) in phoneList" :key="i">
               <div class="item" v-for="(item, j) in arr" :key="j">
                 <span v-bind:class="{ 'new-pro': j % 2 == 0 }">新品</span>
                 <div class="item-img">
-                  <img v-bind:src="item.mainImage" />
+                  <img v-lazy="item.mainImage" />
                 </div>
                 <div class="item-info">
                   <h3>{{ item.name }}</h3>
