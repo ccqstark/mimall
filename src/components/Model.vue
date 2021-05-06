@@ -1,22 +1,47 @@
 <template>
-  <div class="model" v-show="showModel">
-    <!-- 遮罩层 -->
-    <div class="mask"> 
-      <div class="dialog">
+  <transition name="slide">
+    <div class="model" v-show="showModel">
+      <!-- 遮罩层 -->
+      <div class="mask"></div>
+      <div class="model-dialog">
         <div class="model-header">
           <span>标题</span>
-          <a href="javascript:;" class="icon-close"></a>
+          <a
+            href="javascript:;"
+            class="icon-close"
+            v-on:click="$emit('cancel')"
+          ></a>
         </div>
         <div class="model-body">
           <slot name="body"></slot>
         </div>
         <div class="model-footer">
-          <a href="javascript:;" class="btn">确定</a>
-          <a href="javascript:;" class="btn">取消</a>
+          <a
+            href="javascript:;"
+            class="btn"
+            v-if="btnType == 1"
+            v-on:click="$emit('submit')"
+            >确定</a
+          >
+          <a
+            href="javascript:;"
+            class="btn"
+            v-if="btnType == 2"
+            v-on:click="$emit('cancel')"
+            >确定</a
+          >
+          <div class="btn-group" v-if="btnType == 3">
+            <a href="javascript:;" class="btn" v-on:click="$emit('submit')"
+              >确定</a
+            >
+            <a href="javascript:;" class="btn" v-on:click="$emit('cancel')"
+              >取消</a
+            >
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -49,4 +74,5 @@ export default {
 @import "./../assets/scss/config.scss";
 @import "./../assets/scss/mixin.scss";
 @import "./../assets/scss/model.scss";
+@import "./../assets/scss/button.scss";
 </style>

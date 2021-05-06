@@ -86,7 +86,9 @@
                 <div class="item-info">
                   <h3>{{ item.name }}</h3>
                   <p>{{ item.subtitle }}</p>
-                  <p class="price">{{ item.price }}元</p>
+                  <p class="price" @click="addCart(item.id)">
+                    {{ item.price }}元
+                  </p>
                 </div>
               </div>
             </div>
@@ -101,6 +103,8 @@
       btnType="1"
       modelType="middle"
       v-bind:showModel="showModel"
+      v-on:submit="goToCart"
+      v-on:cancel="showModel = false"
     >
       <template v-slot:body>
         <p>商品添加成功!</p>
@@ -221,7 +225,8 @@ export default {
         }
       ],
       // 手机商品展示位
-      phoneList: []
+      phoneList: [],
+      showModel: false
     };
   },
   mounted() {
@@ -238,6 +243,20 @@ export default {
         res.list = res.list.slice(6, 14);
         this.phoneList = [res.list.slice(0, 4), res.list.slice(4, 8)];
       });
+    },
+    addCart() {
+      this.showModel = true;
+      // this.axios.post('/carts',{
+      //   productId: id,
+      //   selected: true
+      // }).then(()=>{
+
+      // }).catch(()=>{
+      //   this.showModel = true
+      // })
+    },
+    goToCart() {
+      this.$router.push("/cart");
     }
   }
 };
