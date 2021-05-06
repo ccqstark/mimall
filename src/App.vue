@@ -14,14 +14,20 @@ export default {
     };
   },
   mounted() {
-    // 本地加载静态json文件的方式mock, public是根目录，所以直接‘/’
-    // this.axios.get('/mock/user/login.json').then((res)=>{
-    //   this.res = res;
-    // });
-
-    this.axios.get("/user/login").then(res => {
-      this.res = res;
-    });
+    this.getUser();
+    this.getCartCount();
+  },
+  methods: {
+    getUser() {
+      this.axios.get("/user").then(res => {
+        this.$store.dispatch("saveUserName", res.username);
+      });
+    },
+    getCartCount() {
+      this.axios.get("/carts/products/sum").then(res => {
+        this.$store.dispatch("saveCartCount", res);
+      });
+    }
   }
 };
 </script>
