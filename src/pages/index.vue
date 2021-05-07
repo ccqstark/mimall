@@ -44,7 +44,7 @@
         </div>
         <swiper v-bind:options="swiperOption">
           <swiper-slide v-for="(item, index) in slideList" v-bind:key="index">
-            <a v-bind:href="'/#/product' + item.id"
+            <a v-bind:href="'/#/product/' + item.id"
               ><img v-bind:src="item.img" alt=""
             /></a>
           </swiper-slide>
