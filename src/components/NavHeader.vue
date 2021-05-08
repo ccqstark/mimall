@@ -13,7 +13,7 @@
           <a href="javascrive:;" v-if="!username" @click="login">登陆</a>
           <a href="javascrive:;" v-if="username">我的订单</a>
           <a href="javascrive:;" class="my-cart" @click="goToCart">
-            <span class="icon-cart"> </span>购物车({{cartCount}})</a
+            <span class="icon-cart"> </span>购物车({{ cartCount }})</a
           >
         </div>
       </div>
@@ -122,7 +122,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 export default {
   name: "nav-header",
   data() {
@@ -137,7 +137,7 @@ export default {
     cartCount(){
       return this.$store.state.cartCount;
     },*/
-    ...mapState(['username','cartCount'])
+    ...mapState(["username", "cartCount"])
   },
   // 过滤器
   filters: {
@@ -209,31 +209,6 @@ export default {
       position: relative;
       @include flex();
       height: 112px;
-      .header-logo {
-        display: inline-block;
-        width: 55px;
-        height: 55px;
-        background-color: #ff6600;
-        border-radius: 20px;
-        a {
-          display: inline-block;
-          width: 110px;
-          height: 55px;
-          &:before {
-            content: " ";
-            @include bgImg(55px, 55px, "/imgs/mi-logo.png", 55px);
-            transition: margin 0.2s;
-          }
-          &:after {
-            content: " ";
-            @include bgImg(55px, 55px, "/imgs/mi-home.png", 55px);
-          }
-          &:hover:before {
-            margin-left: -55px;
-            transition: margin 0.2s;
-          }
-        }
-      }
       .header-menu {
         display: inline-block;
         width: 643px;
