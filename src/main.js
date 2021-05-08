@@ -5,7 +5,7 @@ import VueAxios from "vue-axios";
 import App from "./App.vue";
 import VueLazyLoad from "vue-lazyload";
 import VueCookie from "vue-cookie";
-import store from './store';
+import store from "./store";
 // import env from './env'
 
 // mock开关
@@ -26,9 +26,10 @@ axios.interceptors.response.use(function(response) {
   if (res.status == 0) {
     return res.data;
   } else if (res.status == 10) {
-    if (path != '#/index') {
+    if (path != "#/index") {
       window.location.href = "/#/login";
     }
+    return Promise.reject(res);
   } else {
     alert(res.msg);
     return Promise.reject(res);
