@@ -1,10 +1,10 @@
 <template>
   <transition name="slide">
-    <div class="model" v-show="showModel">
+    <div class="modal" v-show="showModal">
       <!-- 遮罩层 -->
       <div class="mask"></div>
-      <div class="model-dialog">
-        <div class="model-header">
+      <div class="modal-dialog">
+        <div class="modal-header">
           <span>{{ title }}</span>
           <a
             href="javascript:;"
@@ -12,10 +12,10 @@
             v-on:click="$emit('cancel')"
           ></a>
         </div>
-        <div class="model-body">
+        <div class="modal-body">
           <slot name="body"></slot>
         </div>
-        <div class="model-footer">
+        <div class="modal-footer">
           <a
             href="javascript:;"
             class="btn"
@@ -46,10 +46,10 @@
 
 <script>
 export default {
-  name: "model",
+  name: "modal",
   props: {
     //弹框类型:小small、中middle、大large、表单form
-    modelType: {
+    modalType: {
       type: String,
       default: "form"
     },
@@ -68,7 +68,7 @@ export default {
       type: String,
       default: "取消"
     },
-    showModel: Boolean
+    showModal: Boolean
   }
 };
 </script>
@@ -76,6 +76,6 @@ export default {
 <style lang="scss">
 @import "./../assets/scss/config.scss";
 @import "./../assets/scss/mixin.scss";
-@import "./../assets/scss/model.scss";
+@import "./../assets/scss/modal.scss";
 @import "./../assets/scss/button.scss";
 </style>

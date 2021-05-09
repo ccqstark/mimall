@@ -99,26 +99,26 @@
       </div>
     </div>
     <service-bar></service-bar>
-    <model
+    <modal
       title="提示"
       sureText="查看购物车"
       cancelText="取消"
       btnType="1"
-      modelType="middle"
-      v-bind:showModel="showModel"
+      modalType="middle"
+      v-bind:showModal="showModal"
       v-on:submit="goToCart"
-      v-on:cancel="showModel = false"
+      v-on:cancel="showModal = false"
     >
       <template v-slot:body>
         <p>商品添加成功!</p>
       </template>
-    </model>
+    </modal>
   </div>
 </template>
 
 <script>
 import ServiceBar from "../components/ServiceBar.vue";
-import Model from "../components/Model.vue";
+import Modal from "../components/Modal.vue";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 import "swiper/dist/css/swiper.css";
 export default {
@@ -127,7 +127,7 @@ export default {
     swiper,
     swiperSlide,
     ServiceBar,
-    Model
+    Modal
   },
   data() {
     return {
@@ -229,7 +229,7 @@ export default {
       ],
       // 手机商品展示位
       phoneList: [],
-      showModel: false
+      showModal: false
     };
   },
   mounted() {
@@ -254,11 +254,11 @@ export default {
           selected: true
         })
         .then(res => {
-          this.showModel = true;
+          this.showModal = true;
           this.$store.dispatch("saveCartCount", res.cartTotalQuantity);
         })
         .catch(() => {
-          this.showModel = true;
+          this.showModal = true;
         });
     },
     goToCart() {

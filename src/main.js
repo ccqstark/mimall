@@ -2,6 +2,8 @@ import Vue from "vue";
 import router from "./router";
 import axios from "axios";
 import VueAxios from "vue-axios";
+import { Message } from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 import App from "./App.vue";
 import VueLazyLoad from "vue-lazyload";
 import VueCookie from "vue-cookie";
@@ -31,7 +33,7 @@ axios.interceptors.response.use(function(response) {
     }
     return Promise.reject(res);
   } else {
-    alert(res.msg);
+    Message.warning(res.msg);
     return Promise.reject(res);
   }
 });
@@ -41,6 +43,7 @@ Vue.use(VueLazyLoad, {
   loading: "/imgs/loading-svg/loading-spinning-bubbles.svg"
 });
 Vue.use(VueCookie);
+Vue.prototype.$message = Message;
 Vue.config.productionTip = false;
 
 new Vue({
