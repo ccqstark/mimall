@@ -11,7 +11,10 @@
               <p>收货信息：{{ addressInfo }}</p>
             </div>
             <div class="order-total">
-              <p>应付总额：<span>2599</span>元</p>
+              <p>
+                应付总额：<span>{{ payment }}</span
+                >元
+              </p>
               <p>
                 订单详情<em
                   class="icon-down"
@@ -24,7 +27,7 @@
           <div class="item-detail" :class="{ showIt: showDetailStatus }">
             <div class="item">
               <div class="detail-title">订单号：</div>
-              <div class="detail-info theme-color">{{ orderNo }}</div>
+              <div class="detail-info theme-color">{{ orderId }}</div>
             </div>
             <div class="item">
               <div class="detail-title">收货信息：</div>
@@ -66,41 +69,85 @@
         </div>
       </div>
     </div>
-    <scan-pay-code v-if="showPay"></scan-pay-code>
+    <scan-pay-code
+      v-if="showPay"
+      @close="closePayModal"
+      :img="payImg"
+    ></scan-pay-code>
+    <modal
+      title="支付确认"
+      btnType="3"
+      :showModal="showPayModal"
+      sureText="查看订单"
+      cancelText="未支付"
+      @cancel="showPayModal = false"
+      @submit="goOrderList"
+    >
+      <template v-slot:body>
+        <p>您确认是否完成了支付？</p>
+      </template>
+    </modal>
   </div>
 </template>
 <script>
-// import ScanPayCode from './../components/ScanPayCode'
+import QRCode from "qrcode";
+import ScanPayCode from "./../components/ScanPayCode";
+import Modal from "./../components/Modal";
 export default {
   name: "order-pay",
   data() {
     return {
-      showDetail: false, //是否显示订单详情
-      showPay: false, //是否显示微信支付弹框
-      orderNo: this.$route.query.orderNo,
+      showDetail: false, // 是否显示订单详情
+      showPay: false, // 是否显示微信支付弹框
+      showPayModal: false, // 是否显示二次确认支付弹框
+      payImg: "",
+      orderId: this.$route.query.orderNo,
       addressInfo: "", // 收货人地址
       orderList: [], // 订单详情，包含商品列表
       showDetailStatus: false,
-      payType: ""
+      payType: "",
+      T: "", // 定时器
+      payment: 0 //订单总金额
     };
   },
   components: {
-    // ScanPayCode
+    ScanPayCode,
+    Modal
   },
   mounted() {
     this.getOrderDetail();
   },
   methods: {
     getOrderDetail() {
-      this.axios.get(`/orders/${this.orderNo}`).then(res => {
+      this.axios.get(`/orders/${this.orderId}`).then(res => {
         let item = res.shippingVo;
         this.addressInfo = `${item.receiverMobile} ${item.receiverCity} ${item.receiverDistrict} ${item.receiverAddress}`;
         this.orderList = res.orderItemVoList;
+        this.payment = res.payment;
       });
     },
     paySubmit(payType) {
       if (payType == 1) {
-        window.open("/#/order/alipay?orderId=" + this.orderNo, "_blank");
+        window.open("/#/order/alipay?orderId=" + this.orderId, "_blank");
+      } else {
+        this.axios
+          .post("/pay", {
+            orderId: this.orderId,
+            orderName: "vue高仿小米商城",
+            amount: 0.01,
+            payType: 2 //1支付宝,2微信
+          })
+          .then(res => {
+            QRCode.toDataURL(res.content)
+              .then(url => {
+                this.showPay = true;
+                this.payImg = url;
+                this.loopOrderState();
+              })
+              .catch(() => {
+                this.$message.error("微信二维码生成失败");
+              });
+          });
       }
     },
     makeDetailShow() {
@@ -112,6 +159,17 @@ export default {
       this.showPay = false;
       this.showPayModal = true;
       clearInterval(this.T);
+    },
+    // 轮询当前订单支付状态
+    loopOrderState() {
+      this.T = setInterval(() => {
+        this.axios.get(`/orders/${this.orderId}`).then(res => {
+          if (res.status == 20) {
+            clearInterval(this.T);
+            this.goOrderList();
+          }
+        });
+      }, 1000);
     },
     goOrderList() {
       this.$router.push("/order/list");

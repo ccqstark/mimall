@@ -34,7 +34,7 @@
             <a href="javascript:;" class="btn" v-on:click="$emit('submit')"
               >{{ sureText }}
             </a>
-            <a href="javascript:;" class="btn" v-on:click="$emit('cancel')"
+            <a href="javascript:;" class="btn btn-default" v-on:click="$emit('cancel')"
               >{{ cancelText }}
             </a>
           </div>
