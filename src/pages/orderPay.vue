@@ -191,7 +191,7 @@ export default {
     padding-top: 30px;
     padding-bottom: 61px;
     .order-wrap {
-      padding: 62px 50px;
+      padding: 62px 50px 30px;
       background-color: #fff;
       font-size: 14px;
       margin-bottom: 30px;
@@ -253,20 +253,36 @@ export default {
         transition: all 0.5s;
         &.showIt {
           border-top: 1px solid #d7d7d7;
-          padding-top: 47px;
           font-size: 14px;
+          padding-top: 47px;
           margin-top: 45px;
-          height: 120px;
+          height: 100%;
           opacity: 1;
+          .item {
+            height: 25px;
+            margin-bottom: 19px;
+            .detail-title {
+              height: 15px;
+            }
+            .detail-info {
+              height: 15px;
+            }
+          }
         }
         .item {
-          margin-bottom: 19px;
+          height: 0;
+          margin-bottom: 0;
+          transition: all 0.5s;
           .detail-title {
+            height: 0;
             float: left;
             width: 100px;
+            transition: all 0.5s;
           }
           .detail-info {
+            height: 0;
             display: inline-block;
+            transition: all 0.5s;
             img {
               width: 30px;
               vertical-align: middle;
